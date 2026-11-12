@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131d">
+  <title>Meowto Voice — Voice Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Meowto Voice home">
+        <span class="brand-mark">M</span><span>Meowto Voice</span>
+      </a>
+      <div class="workspace-group">
+        <button class="workspace-switch" id="workspaceButton" aria-expanded="false" aria-controls="workspaceDetails">
+          <span class="workspace-dot"></span><span><b>My workspace</b><small>Personal studio</small></span><span class="chevron">⌄</span>
+        </button>
+        <div class="workspace-details" id="workspaceDetails">
+          <span>Available chips</span><strong id="workspaceChipBalance">100,000</strong>
+          <small>Free Account · chip limit 100k</small>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-item group-toggle" id="helpToggle" aria-expanded="false" aria-controls="helpSubnav"><span>?</span> Help <span class="chevron">⌄</span></button>
+        <nav class="subnav" id="helpSubnav">
+          <button data-page="information">Information</button>
+          <button data-page="report">Report bug</button>
+        </nav>
+      </div>
+      <div class="nav-group">
+        <button class="nav-item group-toggle" id="mainToggle" aria-expanded="false" aria-controls="mainSubnav"><span>◈</span> Main <span class="chevron">⌄</span></button>
+        <nav class="subnav" id="mainSubnav">
+          <button class="active-sub" data-page="studio">Main services</button>
+          <button data-page="downloads">Downloads <em id="downloadCount">0</em></button>
+          <button data-page="voices">Voices <em id="voiceCount">0</em></button>
+          <button data-page="history">History</button>
+        </nav>
+      </div>
+      <div class="nav-group">
+        <button class="nav-item group-toggle" id="preferencesToggle" aria-expanded="false" aria-controls="preferencesSubnav"><span>⚙</span> Preferences <span class="chevron">⌄</span></button>
+        <nav class="subnav" id="preferencesSubnav">
+          <button data-page="settings">Settings</button>
+        </nav>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="profile-avatar">F</div>
+        <div class="profile-copy"><b>Free Account</b><small>Personal workspace</small></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <b id="breadcrumbPage">Main services</b></div>
+        <div class="top-actions"><span class="status-dot"></span><span>All changes saved locally</span></div>
+      </header>
+
+      <section class="page active" id="page-studio">
+        <div class="page-heading">
+          <div><div class="eyebrow">VOICE WORKSPACE</div><h1>AI Voice Studio</h1><p>Turn text into speech using a voice sample you have permission to use.</p></div>
+          <div class="chip-card"><div class="chip-icon">✦</div><div><small>CHIPS REMAINING</small><strong id="chipBalance">100,000</strong></div><button id="chipInfo" title="Chip information">ⓘ</button></div>
+        </div>
+        <div class="studio-grid">
+          <section class="panel source-panel">
+            <div class="panel-title"><div><span class="step">01</span><h2>Choose a voice sample</h2></div><span class="optional">REQUIRED</span></div>
+            <p class="muted">Upload an audio sample or record one directly from your device.</p>
+            <div class="upload-zone" id="dropZone">
+              <div class="upload-icon">↑</div><b>Drop an audio file here</b><span>or browse your device</span>
+              <label class="button button-secondary" for="audioFile">Upload recording</label>
+              <input id="audioFile" type="file" accept="audio/*" hidden>
+              <small>MP3, WAV, M4A, OGG · Choose a clear sample</small>
+            </div>
+            <div class="or-divider"><span>OR</span></div>
+            <div class="record-row">
+              <div><b>Record a sample</b><small id="recordStatus">Use your microphone to record a voice sample.</small></div>
+              <button class="button button-secondary" id="recordButton">● Record</button>
+            </div>
+            <div class="selected-audio hidden" id="selectedAudio">
+              <div class="audio-file-icon">♫</div><div class="audio-file-copy"><b id="audioName">sample.mp3</b><small id="audioMeta">Audio sample selected</small></div>
+              <button class="icon-button" id="removeAudio" title="Remove sample">×</button>
+            </div>
+            <div class="field-label voice-save-label">VOICE NAME</div>
+            <div class="save-voice-row"><input id="voiceName" maxlength="40" placeholder="e.g. My narrator voice"><button class="button button-secondary" id="saveVoiceButton" disabled>Save voice</button></div>
+            <div class="notice"><span>ⓘ</span><span>Only upload or record voices you own or have clear permission to use.</span></div>
+          </section>
+
+          <section class="panel text-panel">
+            <div class="panel-title"><div><span class="step">02</span><h2>Enter your script</h2></div><span class="optional">UP TO 10,000 WORDS</span></div>
+            <p class="muted">Write what you want your selected voice to say.</p>
+            <textarea id="scriptText" placeholder="Type or paste your text here...&#10;&#10;Your generated speech will use the selected voice sample." spellcheck="true"></textarea>
+            <div class="text-stats"><span id="wordCount">0 / 10,000 words</span><span><b id="charCount">0</b> characters</span></div>
+            <div class="cost-row"><span>Estimated chip cost</span><b><span id="chipCost">0</span> chips</b></div>
+            <button class="button button-primary clone-button" id="cloneButton" disabled><span>✦</span> Clone voice <span class="button-arrow">→</span></button>
+            <p class="clone-note" id="cloneNote">The voice-generation engine will be connected in the next build step.</p>
+          </section>
+        </div>
+        <div class="bottom-tip"><span>✧</span><div><b>Good samples make better voices</b><p>Use a clear recording with minimal background noise and a natural speaking style.</p></div></div>
+      </section>
+
+      <section class="page" id="page-downloads">
+        <div class="page-heading simple-heading"><div><div class="eyebrow">YOUR LIBRARY</div><h1>Downloads</h1><p>Your generated audio files will appear here.</p></div></div>
+        <div class="panel list-panel"><div class="empty-state" id="downloadsEmpty"><div class="empty-icon">⇩</div><h2>No downloads yet</h2><p>When you clone a voice, your generated audio will be listed here.</p><button class="button button-secondary" data-go="studio">Go to Voice Studio</button></div><div id="downloadsList" class="saved-list"></div></div>
+      </section>
+
+      <section class="page" id="page-voices">
+        <div class="page-heading simple-heading"><div><div class="eyebrow">VOICE LIBRARY</div><h1>My voices</h1><p>Manage voice samples saved in this browser.</p></div><button class="button button-primary" data-go="studio">＋ Add a voice</button></div>
+        <div class="panel list-panel"><div class="empty-state" id="voicesEmpty"><div class="empty-icon">♬</div><h2>No saved voices</h2><p>Upload or record a sample in Voice Studio, then save it here.</p><button class="button button-secondary" data-go="studio">Add your first voice</button></div><div id="voicesList" class="saved-list"></div></div>
+      </section>
+
+      <section class="page" id="page-history">
+        <div class="page-heading simple-heading"><div><div class="eyebrow">ACTIVITY</div><h1>History</h1><p>Your recent actions on this device.</p></div></div>
+        <div class="panel list-panel"><div class="empty-state"><div class="empty-icon">◷</div><h2>Nothing here yet</h2><p>Your future voice-generation activity will appear here.</p></div></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="page-heading simple-heading"><div><div class="eyebrow">PREFERENCES</div><h1>Settings</h1><p>Manage local data and workspace preferences.</p></div></div>
+        <div class="panel settings-panel"><h2>Local data</h2><p class="muted">Your chip balance and saved voice details are stored in this browser. Clearing site data may remove them.</p><button class="button button-danger" id="resetButton">Reset local chip balance</button></div>
+      </section>
+
+      <section class="page" id="page-information">
+        <div class="page-heading simple-heading"><div><div class="eyebrow">HELP CENTRE</div><h1>Information</h1><p>Learn how Meowto Voice works.</p></div></div>
+        <div class="panel info-panel"><h2>Getting started</h2><ol><li>Upload or record a voice sample you have permission to use.</li><li>Give the sample a name and save it in your Voices library.</li><li>Enter the words you want spoken.</li><li>Generate the audio once the voice engine is connected.</li></ol><h2>Chip usage</h2><p>Each character in your script—including spaces and punctuation—costs one chip. Your starting balance is 100,000 chips. This interface currently previews the cost; generation is not connected yet.</p><h2>Privacy</h2><p>Saved voice samples are kept in this browser on this device. Avoid using shared devices for private recordings.</p></div>
+      </section>
+
+      <section class="page" id="page-report">
+        <div class="page-heading simple-heading"><div><div class="eyebrow">HELP CENTRE</div><h1>Report a bug</h1><p>Tell us what went wrong.</p></div></div>
+        <form class="panel report-panel" id="bugForm"><label for="bugTitle">Issue title</label><input id="bugTitle" required maxlength="100" placeholder="Briefly describe the issue"><label for="bugDetails">What happened?</label><textarea id="bugDetails" required maxlength="3000" placeholder="Include the steps that caused the issue..."></textarea><button class="button button-primary" type="submit">Save bug report locally</button><p class="muted" id="bugFeedback">This demo saves your report in this browser; it does not send it to a server.</p></form>
+      </section>
+
+      <footer class="footer"><span>MEOWTO VOICE INTERFACE PREVIEW</span><span>Built for your workspace</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
